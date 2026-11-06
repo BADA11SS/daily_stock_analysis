@@ -569,7 +569,18 @@ jobs:
             reports/
             logs/
           retention-days: 30
-      
+
+      - name: 输出报告全文
+        if: always()
+        run: |
+          shopt -s nullglob
+          for f in reports/*.md; do
+            echo "===== DSA_REPORT_BEGIN $(basename "$f") ====="
+            cat "$f"
+            echo ""
+            echo "===== DSA_REPORT_END $(basename "$f") ====="
+          done
+
       - name: 显示运行结果
         if: always()
         run: |
